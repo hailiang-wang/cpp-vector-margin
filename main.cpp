@@ -1,12 +1,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <utility>
 
 using namespace std;
 
+typedef std::vector< pair<int, int>> WR; // word range
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
+void get_vector_margin()
+{
     std::vector<int> vec;
     vec.push_back(3);
     vec.push_back(4);
@@ -57,6 +59,49 @@ int main() {
 //        -------- start: 11, end: 11
 //    start: 14
 //        -------- start: 14, end: 14
+}
+
+
+void merge_vectot_margin()
+{
+    std::cout << "merge_vectot_margin" << endl;
+    WR vec1;
+    vec1.push_back(make_pair(0, 3));
+    vec1.push_back(make_pair(4, 4));
+    vec1.push_back(make_pair(5, 6));
+    vec1.push_back(make_pair(7, 9));
+    vec1.push_back(make_pair(10, 10));
+
+    WR vec2;
+    vec2.push_back(make_pair(3, 6));
+
+    WR vec3;
+
+    for(WR::iterator pi = vec2.begin(); pi != vec2.end(); ++pi){
+        std::cout << " from " << pi->first << ", to " << pi->second << endl;
+        int start = pi->first;
+        int end = pi->second;
+        for(WR::iterator pj = vec1.begin(); pj != vec1.end(); ++pj){
+            if((pi->first >= pj->first) && (pi->first <= pj->second)){
+                start = pj->first;
+            }
+
+            if((pi->second >= pj->first)&&(pi->second <= pj->second)){
+                end = pj->second;
+            }
+        }
+
+        vec3.push_back(make_pair(start, end));
+        std::cout << " start: " << start << ", end: " << end << endl;
+    }
+
+
+}
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+//    get_vector_margin();
+    merge_vectot_margin();
 
     return 0;
 }
